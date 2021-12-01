@@ -1,0 +1,24 @@
+included:
+  - Sources
+  - Tests
+excluded:
+  - Tests/LinuxMain.swift
+  - Tests/*/XCTestManifests.swift
+disabled_rules:
+  - file_length
+  - large_tuple
+  - nesting
+identifier_name:
+  excluded:
+    - x
+    - y
+    - z
+    - w
+    - dx
+    - dy
+    - dz
+    - dw
+    - id
+    - a
+    - b
+    - xs

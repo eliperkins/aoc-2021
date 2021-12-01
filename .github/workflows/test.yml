@@ -1,0 +1,30 @@
+name: Test
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  macos:
+    name: macOS
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build
+      run: swift build -v -c release
+    - name: Run tests
+      run: swift test -v -c release
+  ubuntu:
+    name: Ubuntu
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        action:
+          - build -c release
+          - test -c release
+    steps:
+    - uses: actions/checkout@v2
+    - name: Action
+      run: Scripts/ubuntu.sh ${{ matrix.action }}
