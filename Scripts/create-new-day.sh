@@ -43,4 +43,3 @@ private let solutionInput = """
 
 """
 SWIFT
-swift test --generate-linuxmain
