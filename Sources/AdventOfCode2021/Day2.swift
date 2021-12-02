@@ -18,7 +18,7 @@ public enum Day2 {
 
     private static func parseMovements(from input: String) -> [Movement] {
         input.lines.compactMap { line in
-            let parts = line.split(separator: " ", maxSplits: 2, omittingEmptySubsequences: true)
+            let parts = line.split(separator: " ", maxSplits: 1, omittingEmptySubsequences: true)
 
             guard let direction = parts.first.flatMap(String.init).flatMap(Direction.init(rawValue:)),
                     let value = parts.last.flatMap(String.init).flatMap(Int.init)
