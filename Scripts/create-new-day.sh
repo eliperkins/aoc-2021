@@ -35,6 +35,7 @@ final class Day${day}Tests: XCTestCase {
     }
 }
 
+// swiftlint:disable all
 private let testInput = """
 
 """
@@ -42,4 +43,5 @@ private let testInput = """
 private let solutionInput = """
 
 """
+// swiftlint:enable all
 SWIFT
