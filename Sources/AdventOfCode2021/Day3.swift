@@ -5,25 +5,7 @@ public enum Day3 {
         let epsilon: [Int]
     }
 
-    struct Matrix {
-        private let storage: [[Int]]
-
-        init(_ xs: [[Int]]) {
-            storage = xs
-        }
-
-        var rows: [[Int]] {
-            storage
-        }
-
-        var columns: [[Int]] {
-            storage[0].indices.map { index in
-                storage.map { $0[index] }
-            }
-        }
-    }
-
-    static func createMatrix(from input: String) -> Matrix {
+    static func createMatrix(from input: String) -> Matrix<Int> {
         Matrix(
             input.lines.map { line in
                 line.compactMap(String.init).compactMap(Int.init)
@@ -31,7 +13,7 @@ public enum Day3 {
         )
     }
 
-    static func calculateRate(from matrix: Matrix) -> Rate {
+    static func calculateRate(from matrix: Matrix<Int>) -> Rate {
         matrix.columns.reduce(Rate(gamma: [], epsilon: [])) { acc, next in
             let counts = Dictionary(grouping: next, by: { $0 })
             let zeros = counts[0]?.count ?? 0
