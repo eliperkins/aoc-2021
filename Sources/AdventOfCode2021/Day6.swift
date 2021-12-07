@@ -34,15 +34,16 @@ public enum Day6 {
         return memo
     }
 
-    public static let laternfishProduced: (Input) -> Int = recursiveMemoize { (calc: ((Input) -> Int), input: Input) in
-        let x = input.days - input.fish
-        if x > 0 {
-            return calc(Input(fish: 6, days: x - 1))
-                + calc(Input(fish: 8, days: x - 1))
-        } else {
-            return 1
+    public static let laternfishProduced: (Input) -> Int = 
+        recursiveMemoize { (calc: ((Input) -> Int), input: Input) in
+            let x = input.days - input.fish
+            if x > 0 {
+                return calc(Input(fish: 6, days: x - 1))
+                    + calc(Input(fish: 8, days: x - 1))
+            } else {
+                return 1
+            }
         }
-    }
 
     public static func betterCountLanternfish(from input: String, for days: Int) -> Int {
         let fishes = input.split(separator: ",").compactMap { Int(String($0)) }
