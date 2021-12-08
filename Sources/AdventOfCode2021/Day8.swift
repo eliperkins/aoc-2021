@@ -33,8 +33,11 @@ public enum Day8 {
 
             let byCount = Dictionary(grouping: inputs, by: \.count)
 
+            let ones = byCount[2]!.first!
+            let sevens = byCount[3]!.first!
             let fours = byCount[4]!.first!
             let eights = byCount[7]!.first!
+
             let threes = byCount[5]!.first(where: { Set($0).isSuperset(of: Set(ones)) })!
             let fives = byCount[5]!.first(where: { Set($0).isSuperset(of: Set(fours).subtracting(Set(sevens))) })!
             let twos = byCount[5]!.first(where: { Set($0).isSuperset(of: Set(eights).subtracting(Set(fives))) })!
