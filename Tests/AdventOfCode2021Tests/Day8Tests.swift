@@ -11,14 +11,13 @@ final class Day8Tests: XCTestCase {
     }
 
     func test_part2_test() {
-        // swiftlint:disable:next line_length
         let smallInput = "acedgfb cdfbe gcdfa fbcad dab cefabd cdfgeb eafb cagedb ab | cdfeb fcadb cdfeb cdbaf"
         XCTAssertEqual(Day8.solvePartTwo(from: smallInput), 5353)
         XCTAssertEqual(Day8.solvePartTwo(from: testInput), 61229)
     }
 
     func test_part2_solution() {
-        XCTAssertEqual(Day8.solvePartTwo(from: solutionInput), 1)
+        XCTAssertEqual(Day8.solvePartTwo(from: solutionInput), 994266)
     }
 }
 
