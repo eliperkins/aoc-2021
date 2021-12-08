@@ -19,7 +19,9 @@ public enum Day6 {
         }
     }
 
-    static func recursiveMemoize<Input: Hashable, Output>(_ function: @escaping ((Input) -> Output, Input) -> Output) -> (Input) -> Output {
+    static func recursiveMemoize<Input: Hashable, Output>(
+        _ function: @escaping ((Input) -> Output, Input) -> Output
+    ) -> (Input) -> Output {
         var storage = [Input: Output]()
         var memo: ((Input) -> Output)!
         memo = { input in
@@ -34,8 +36,8 @@ public enum Day6 {
         return memo
     }
 
-    public static let laternfishProduced: (Input) -> Int = 
-        recursiveMemoize { (calc: ((Input) -> Int), input: Input) in
+    public static let laternfishProduced: (Input) -> Int
+        = recursiveMemoize { (calc: ((Input) -> Int), input: Input) in
             let x = input.days - input.fish
             if x > 0 {
                 return calc(Input(fish: 6, days: x - 1))
