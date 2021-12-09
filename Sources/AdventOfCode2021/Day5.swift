@@ -1,11 +1,6 @@
 import Foundation
 
 public enum Day5 {
-    struct Point: Hashable {
-        let x: Int
-        let y: Int
-    }
-
     static func solve(_ input: String, includeDiagonals: Bool) -> Int {
         let points: [[Point]] = input.lines.map { line in
             let linePoint = line.components(separatedBy: " -> ")
