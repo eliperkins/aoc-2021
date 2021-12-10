@@ -13,6 +13,7 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/apple/swift-algorithms", from: "1.0.0"),
+        .package(url: "https://github.com/apple/swift-collections", from: "1.0.2"),
         .package(url: "https://github.com/apple/swift-numerics", from: "1.0.2"),
         .package(url: "https://github.com/ChimeHQ/Flexer.git", .revision("16eafa09e2137fdbb14dadc2296adfedd53f1593")),
     ],
@@ -21,6 +22,7 @@ let package = Package(
             name: "AdventOfCode2021",
             dependencies: [
                 .product(name: "Algorithms", package: "swift-algorithms"),
+                .product(name: "Collections", package: "swift-collections"),
                 .product(name: "Numerics", package: "swift-numerics"),
                 .product(name: "Flexer", package: "Flexer"),
             ]
