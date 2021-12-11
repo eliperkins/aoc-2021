@@ -67,10 +67,10 @@ public enum Day10 {
             }
         }
 
-        if scores.isEmpty {
+        if lineScores.isEmpty {
             return 0
         }
 
-        return scores.sorted()[Int((scores.count - 1) / 2)]
+        return lineScores.sorted()[Int((lineScores.count - 1) / 2)]
     }
 }
