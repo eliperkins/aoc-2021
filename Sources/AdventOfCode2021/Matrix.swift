@@ -1,5 +1,5 @@
 struct Matrix<T> {
-    private let storage: [[T]]
+    private(set) var storage: [[T]]
 
     init(_ xs: [[T]]) {
         storage = xs
@@ -26,12 +26,39 @@ struct Matrix<T> {
         return nil
     }
 
+    func at(_ point: Point) -> T? {
+        atPosition(x: point.x, y: point.y)
+    }
+
+    mutating func set(value: T, x: Int, y: Int) {
+        if storage.indices.contains(y) {
+            let row = storage[y]
+            if row.indices.contains(x) {
+                storage[y][x] = value
+            }
+        }
+    }
+
+    mutating func set(value: T, point: Point) {
+        set(value: value, x: point.x, y: point.y)
+    }
+
     func forEachPosition(_ fn: (T, (x: Int, y: Int)) -> Void) {
         rows.enumerated().forEach { (rowIndex, row) in
             row.enumerated().forEach { (columnIndex, item) in
                 fn(item, (x: columnIndex, y: rowIndex))
             }
         }
+    }
+
+    func map<U>(_ fn: (T, (x: Int, y: Int)) -> U) -> Matrix<U> {
+        Matrix<U>(
+            rows.enumerated().map { (rowIndex, row) in
+                row.enumerated().map { (columnIndex, item) in
+                    fn(item, (x: columnIndex, y: rowIndex))
+                }
+            }
+        )
     }
 
     func collect(_ predicate: (T, (x: Int, y: Int)) -> Bool) -> [T] {
