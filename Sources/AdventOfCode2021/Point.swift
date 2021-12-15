@@ -11,6 +11,7 @@ struct Point: Hashable {
         self.x = coordinates.0
         self.y = coordinates.1
     }
+
     var adjecent: [Point] {
         [
             Point(x: x + 1, y: y),
