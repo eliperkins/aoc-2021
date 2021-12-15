@@ -69,64 +69,23 @@ public enum Day12 {
         }
     }
 
-    public static func solvePartOne(from input: String) -> Int {
-        let edges = input.lines.map(Edge.init)
-        let graph: [Node: Set<Node>] = {
-            var dict = [Node: [Node]]()
-            for edge in edges {
-                dict[edge.startNode] = dict[edge.startNode, default: []] + [edge.endNode]
-                dict[edge.endNode] = dict[edge.endNode, default: []] + [edge.startNode]
-            }
-            return dict.mapValues(Set.init)
-        }()
+    struct Graph {
+        private let storage: [Node: Set<Node>]
 
-        func paths(
-            from startingNode: Node,
-            to endingNode: Node,
-            visited: OrderedSet<Node>? = nil
-        ) -> [[Node]] {
-            var mutableVisited: OrderedSet<Node>
-            if let visited = visited {
-                mutableVisited = visited
-            } else {
-                mutableVisited = OrderedSet<Node>()
-            }
-            mutableVisited.append(startingNode)
-
-            if startingNode == endingNode {
-                return [Array(mutableVisited)]
-            }
-
-            let unvistable = mutableVisited.filter {
-                if case let .cave(cave) = $0 {
-                    return cave.kind != .big
-                }
-
-                return true
-            }
-
-            guard let neighbors = graph[startingNode]?.subtracting(unvistable) else {
-                return []
-            }
-
-            return neighbors.flatMap { neighbor in
-                paths(from: neighbor, to: endingNode, visited: mutableVisited)
-            }
+        var nodes: [Node] {
+            Array(storage.keys)
         }
 
-        return paths(from: .start, to: .end).count
-    }
-
-    public static func solvePartTwo(from input: String) -> Int {
-        let edges = input.lines.map(Edge.init)
-        let graph: [Node: Set<Node>] = {
-            var dict = [Node: [Node]]()
-            for edge in edges {
-                dict[edge.startNode] = dict[edge.startNode, default: []] + [edge.endNode]
-                dict[edge.endNode] = dict[edge.endNode, default: []] + [edge.startNode]
-            }
-            return dict.mapValues(Set.init)
-        }()
+        init(_ edges: [Edge]) {
+            self.storage = {
+                var dict = [Node: [Node]]()
+                for edge in edges {
+                    dict[edge.startNode] = dict[edge.startNode, default: []] + [edge.endNode]
+                    dict[edge.endNode] = dict[edge.endNode, default: []] + [edge.startNode]
+                }
+                return dict.mapValues(Set.init)
+            }()
+        }
 
         func paths(
             from startingNode: Node,
@@ -164,7 +123,7 @@ public enum Day12 {
                 return true
             }
 
-            guard let neighbors = graph[startingNode]?.subtracting(unvistable) else {
+            guard let neighbors = storage[startingNode]?.subtracting(unvistable) else {
                 return []
             }
 
@@ -177,9 +136,19 @@ public enum Day12 {
                 )
             }
         }
+    }
 
-        let allPaths = paths(from: .start, to: .end)
-            + graph.keys.filter {
+    public static func solvePartOne(from input: String) -> Int {
+        let edges = input.lines.map(Edge.init)
+        let graph = Graph(edges)
+        return graph.paths(from: .start, to: .end).count
+    }
+
+    public static func solvePartTwo(from input: String) -> Int {
+        let edges = input.lines.map(Edge.init)
+        let graph = Graph(edges)
+        let allPaths = graph.paths(from: .start, to: .end)
+            + graph.nodes.filter {
                 switch $0 {
                 case .cave(let cave):
                     return cave.kind == .small
@@ -187,7 +156,7 @@ public enum Day12 {
                     return false
                 }
             }.flatMap {
-                paths(from: .start, to: .end, doubleVisitSmallNode: $0)
+                graph.paths(from: .start, to: .end, doubleVisitSmallNode: $0)
             }
 
         return Set(allPaths).count
